@@ -7,6 +7,13 @@ const {
     updateTaskHandler,
     deleteTaskHandler,
 } = require('../src/infrastructure/controllers/TaskController');
+const {
+    createReminderHandler,
+    getRemindersHandler,
+    updateReminderHandler,
+    deleteReminderHandler,
+} = require('../src/infrastructure/controllers/ReminderController');
+
 
 const app = express();
 app.use(cors({
@@ -25,6 +32,12 @@ app.post('/api/tasks', createTaskHandler);
 app.get('/api/tasks/:userid', getTasksHandler);
 app.put('/api/tasks/:taskid', updateTaskHandler);
 app.delete('/api/tasks/:taskid', deleteTaskHandler);
+
+// Routes pour les rappels
+app.post('/api/reminders', createReminderHandler);
+app.get('/api/reminders/:userid', getRemindersHandler);
+app.put('/api/reminders/:reminderid', updateReminderHandler);
+app.delete('/api/reminders/:reminderid', deleteReminderHandler);
 
 if (require.main === module) {
     const PORT = process.env.PORT || 3000;
