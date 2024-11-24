@@ -16,15 +16,15 @@
 // describe('UserService', () => {
 //     test('registerUser should hash the password and create a user', async () => {
 //         getUserByEmail.mockResolvedValue(null);
-//         createUser.mockResolvedValue({ userId: 1, username: 'TestUser', email: 'test@example.com', role: 'user' });
+//         createUser.mockResolvedValue({ userid: 1, username: 'TestUser', email: 'test@example.com', role: 'user' });
 
 //         const user = await registerUser({ username: 'TestUser', email: 'test@example.com', password: 'password123' });
-//         expect(user).toHaveProperty('userId');
+//         expect(user).toHaveProperty('userid');
 //     });
 
 //     test('loginUser should return a token for valid credentials', async () => {
 //         getUserByEmail.mockResolvedValue({
-//             userId: 1,
+//             userid: 1,
 //             username: 'TestUser',
 //             email: 'test@example.com',
 //             password: await bcrypt.hash('password123', 10),

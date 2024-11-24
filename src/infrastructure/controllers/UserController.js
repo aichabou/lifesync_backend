@@ -5,7 +5,7 @@ const register = async (req, res) => {
         console.log('Body reçu pour inscription :', req.body);
         const user = await registerUser(req.body);
 
-        // Transforme `userid` en `userId` pour correspondre aux attentes des tests
+        // Transforme `userid` en `userid` pour correspondre aux attentes des tests
         res.status(201).json({
             message: 'Utilisateur créé avec succès',
             user: {
