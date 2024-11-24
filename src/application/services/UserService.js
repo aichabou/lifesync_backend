@@ -25,8 +25,8 @@ const loginUser = async ({ email, password }) => {
 
     if (!process.env.JWT_SECRET) throw new Error('JWT_SECRET manquant');
     
-    const token = jwt.sign({ userId: user.userId }, process.env.JWT_SECRET, { expiresIn: '1h' });
-    return { token, userId: user.userId, username: user.username };
+    const token = jwt.sign({ userid: user.userid }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    return { token, userid: user.userid, username: user.username };
 };
 
 
