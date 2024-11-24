@@ -9,7 +9,7 @@ const register = async (req, res) => {
         res.status(201).json({
             message: 'Utilisateur créé avec succès',
             user: {
-                userId: user.userid, // Conversion explicite
+                userid: user.userid, // Conversion explicite
                 username: user.username,
                 email: user.email,
                 role: user.role,
@@ -25,8 +25,8 @@ const register = async (req, res) => {
 const login = async (req, res) => {
     try {
         console.log('Données reçues pour connexion :', req.body);
-        const { token, userId, username } = await loginUser(req.body);
-        res.json({ message: 'Connexion réussie', token, user: { userId, username } });
+        const { token, userid, username } = await loginUser(req.body);
+        res.json({ message: 'Connexion réussie', token, user: { userid, username } });
     } catch (err) {
         console.error('Erreur dans loginUser :', err.message);
         res.status(400).json({ error: err.message });

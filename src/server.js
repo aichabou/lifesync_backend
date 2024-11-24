@@ -1,6 +1,12 @@
 const express = require('express');
 const cors = require('cors');
 const { register, login } = require('../src/infrastructure/controllers/UserController')
+const {
+    createTaskHandler,
+    getTasksHandler,
+    updateTaskHandler,
+    deleteTaskHandler,
+} = require('../src/infrastructure/controllers/TaskController');
 
 const app = express();
 app.use(cors({
@@ -13,6 +19,12 @@ app.get('/register', (req, res) => {
 });
 app.post('/api/register', register);
 app.post('/api/login', login);
+
+// Routes pour les tâches
+app.post('/api/tasks', createTaskHandler);
+app.get('/api/tasks/:userid', getTasksHandler);
+app.put('/api/tasks/:taskid', updateTaskHandler);
+app.delete('/api/tasks/:taskid', deleteTaskHandler);
 
 if (require.main === module) {
     const PORT = process.env.PORT || 3000;
