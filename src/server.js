@@ -13,14 +13,15 @@ const {
     updateReminderHandler,
     deleteReminderHandler,
 } = require('../src/infrastructure/controllers/ReminderController');
-
+// Sécurité contre attaque XSS
+const xssClean = require('xss-clean');
 
 const app = express();
 app.use(cors({
     origin: 'http://localhost:3001', // Autorise uniquement cette origine
 }));
 app.use(express.json());
-
+app.use(xssClean());
 app.get('/register', (req, res) => {
     res.send('Cette route est prévue pour gérer les inscriptions via une requête POST.');
 });
