@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const { register, login } = require('../src/infrastructure/controllers/UserController')
+const { register, login, getUserData, deleteUserData } = require('../src/infrastructure/controllers/UserController')
 const {
     createTaskHandler,
     getTasksHandler,
@@ -39,6 +39,9 @@ app.post('/api/reminders', createReminderHandler);
 app.get('/api/reminders/:userid', getRemindersHandler);
 app.put('/api/reminders/:reminderid', updateReminderHandler);
 app.delete('/api/reminders/:reminderid', deleteReminderHandler);
+
+app.get('/api/user', getUserData); // Route pour accéder aux données
+app.delete('/api/user', deleteUserData); // Route pour supprimer les données
 
 if (require.main === module) {
     const PORT = process.env.PORT || 3000;
