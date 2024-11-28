@@ -10,6 +10,9 @@ const pool = require('../../infrastructure/config/db');
 const createTaskHandler = async (req, res) => {
     try {
         const { userid, description, deadline, priority, status } = req.body;
+        if (!userid || !description || !deadline || !priority || !status) {
+            return res.status(400).json({ error: 'ID utilisateur manquant.' });
+        }
         const query = `
             INSERT INTO "Task" (userid, description, deadline, priority, status)
             VALUES ($1, $2, $3, $4, $5)
@@ -19,16 +22,10 @@ const createTaskHandler = async (req, res) => {
         const result = await pool.query(query, values);
 
         const task = result.rows[0];
-        res.status(201).json({
-            taskid: task.taskid,
-            description: task.description,
-            deadline: task.deadline,
-            priority: task.priority,
-            status: task.status,
-        });
+        res.status(201).json({task});
     } catch (err) {
         console.error('Erreur dans createTaskHandler :', err.message);
-        res.status(400).json({ error: err.message });
+        res.status(500).json({ error: err.message });
     }
 };
 
@@ -36,8 +33,12 @@ const createTaskHandler = async (req, res) => {
 const getTasksHandler = async (req, res) => {
     try {
         const { userid } = req.params;
-        const { sortBy, order } = req.query;
-        const tasks = await listTasksByUser(userid, sortBy, order);
+        
+        if (!userid) {
+            return res.status(400).json({ error: "L'ID utilisateur est requis." });
+        }
+        // const { sortBy, order } = req.query;
+        const tasks = await listTasksByUser(userid);
         res.json(tasks);
     } catch (err) {
         res.status(400).json({ error: err.message });
@@ -53,6 +54,9 @@ const updateTaskHandler = async (req, res) => {
         }
 
         const { description, deadline, priority, status } = req.body;
+        if (!description) {
+            return res.status(400).json({ error: "La description est obligatoire." });
+        }
 
         const updatedTask = await modifyTask(taskid, {
             description,
@@ -64,7 +68,7 @@ const updateTaskHandler = async (req, res) => {
         if (!updatedTask) {
             return res.status(404).json({ error: 'Tâche non trouvée' });
         }
-
+        console.log("Requête reçue pour mise à jour :", req.body);
         res.status(200).json(updatedTask);
     } catch (err) {
         console.error('Erreur dans updateTaskHandler :', err.message);
