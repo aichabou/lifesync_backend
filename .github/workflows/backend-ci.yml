@@ -1,0 +1,32 @@
+name: Backend CI Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Étape 1: Récupérer le code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Étape 2: Installer Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      # Étape 3: Installer les dépendances
+      - name: Install dependencies
+        run: npm install
+
+      # Étape 4: Exécuter les tests
+      - name: Run tests
+        run: npm test
